@@ -1,16 +1,7 @@
 -- 1) List the employee number, last name, first name, sex, and salary of each employee.
-SELECT
-	e.emp_no,
-	e.last_name,
-	e.first_name,
-	e.sex,
-	s.salary
-FROM
-	employees e 
-	join salaries s on e.emp_no = s.emp_no
-Order by
-	e.last_name ASC,
-	s.salary DESC;
+SELECT employees.emp_no AS employee_number, employees.last_name, employees.first_name, employees.sex, salaries.salary
+FROM employees
+JOIN salaries ON employees.emp_no = salaries.emp_no;
 -- 2) List the first name, last name, and hire date for the employees who were hired in 1986.
 
 SELECT first_name, last_name, hire_date
@@ -30,18 +21,9 @@ JOIN employees e ON de.emp_no = e.emp_no
 JOIN departments d ON de.dept_no = d.dept_no;
 
 -- 5) List first name, last name, and sex of each employee whose first name is Hercules and whose last name begins with the letter B.
-SELECT
-	e.first_name,
-	e.last_name,
-	e.sex
-FROM
-	employees e
-WHERE
-	e.first_name = 'Hercules'
-	and e.last_name like 'B%'
-ORDER BY
-	e.last_name ASC,
-	e.first_name ASC;
+SELECT first_name, last_name, sex
+FROM employees
+WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
 
 --6) List each employee in the Sales department, including their employee number, last name, and first name.
 SELECT e.emp_no AS employee_number, e.last_name, e.first_name
@@ -58,13 +40,7 @@ JOIN departments d ON de.dept_no = d.dept_no
 WHERE d.dept_name IN ('Sales', 'Development');
 
 -- 8) List the frequency counts, in descending order, of all the employee last names (that is, how many employees share each last name)
-SELECT
-	e.last_name,
-	count(e.emp_no) as num_last_name
-FROM
-	employees e
-GROUP BY
-	e.last_name
-ORDER BY
-	num_last_name ASC;
-
+SELECT last_name, COUNT(*) AS frequency
+FROM employees
+GROUP BY last_name
+ORDER BY frequency DESC;
